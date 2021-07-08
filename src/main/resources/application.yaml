@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: dcp2lo
+    
+lo:
+  hostname: liveobjects.orange-business.com
+  api-key: _API_KEY_
+  device-group: _DEVICE_GROUP_
+  synchronization-interval: 60000
+  synchronization-thread-pool-size: 40
+  
+dcp:
+  customer-no: _CUSTOMER_NUBER
+  login: _CUSTOMER_LOGIN
+  password: _CUSTOMER_PASSWORD

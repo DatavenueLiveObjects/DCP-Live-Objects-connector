@@ -1,0 +1,8 @@
+COMPONENT                               | VERSION  | LICENCE            | URL
+----------------------------------------------------------------------------------------------------------------------
+Spring Boot Starter                     | 2.4.3    | Apache License 2.0 | https://www.apache.org/licenses/LICENSE-2.0
+Spring Boot Starter Web                 | 2.4.3    | Apache License 2.0 | https://www.apache.org/licenses/LICENSE-2.0
+Spring Boot Starter Test                | 2.4.3    | Apache License 2.0 | https://www.apache.org/licenses/LICENSE-2.0
+Spring Boot Configuration Processor     | 2.4.3    | Apache License 2.0 | https://www.apache.org/licenses/LICENSE-2.0
+Jodah Failsafe                          | 2.4.0    | Apache License 2.0 | https://www.apache.org/licenses/LICENSE-2.0
+wsdl4j                                  | 1.6.3    | CPL 1.0            | http://www.opensource.org/licenses/cpl1.0.txt
