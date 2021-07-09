@@ -38,8 +38,8 @@ public final class CodeConverter {
 			}
 		}
 		int sum = 0;
-		for (int i = 0; i < digits.length; i++) {
-			sum += digits[i];
+		for (int j : digits) {
+			sum += j;
 		}
 		/* multiply by 9 step */
 		sum = sum * 9;

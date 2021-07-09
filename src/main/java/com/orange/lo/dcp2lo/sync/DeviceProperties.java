@@ -17,7 +17,7 @@ import org.apache.logging.log4j.util.Strings;
 
 public class DeviceProperties {
 
-    private DateFormat dateFormat;
+    private final DateFormat dateFormat;
 
     private XMLGregorianCalendar simLastUpdate;
     private String simStatus;
@@ -45,6 +45,7 @@ public class DeviceProperties {
         this.dateFormat = dateFormat;
     }
 
+    // Due to a technical limitation in LO, this map must have <= 10 elements
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>();
         // map.put("SIM last update", convertXMLGregorianCalendar(simLastUpdate));

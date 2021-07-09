@@ -21,7 +21,7 @@ public class SubscriptionManagementClient extends WebServiceGatewaySupport {
 
     private static final String IMSI = "imsi";
 
-    public QuerySubscriptionsResponse getSubsctiptions(String customerNo) {
+    public QuerySubscriptionsResponse getSubscriptions(String customerNo) {
         QuerySubscriptionsRequest req = new QuerySubscriptionsRequest();
         req.setCustomerNo(customerNo);
         req.setMaxResults(20);
