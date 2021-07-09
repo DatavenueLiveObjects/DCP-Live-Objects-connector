@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 class DevicePropertiesTest {
 
@@ -15,6 +16,6 @@ class DevicePropertiesTest {
 
         Map<String, String> map = deviceProperties.toMap();
 
-        assertTrue(map.size() <= 10);
+        assertThat(map.size(), lessThanOrEqualTo(10));
     }
 }
