@@ -34,7 +34,7 @@ public class SecurityInterceptor extends ClientInterceptorAdapter {
     private static final String PASSWORD_NAME = "Password";
     private static final String PASSWORD_PREFIX = "wsse";
 
-    private DcpProperties dcpProperties;
+    private final DcpProperties dcpProperties;
 
     public SecurityInterceptor(DcpProperties dcpProperties) {
         this.dcpProperties = dcpProperties;

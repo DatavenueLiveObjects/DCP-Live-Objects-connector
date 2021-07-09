@@ -45,12 +45,12 @@ public class SynchronizationManagement {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private LoService loService;
-    private DcpProperties dcpProperties;
-    private SubscriptionManagementClient subscriptionManagementClient;
-    private SubscriptionTrafficClient subscriptionTrafficClient;
-    private ThreadPoolExecutor synchronizingExecutor;
-    private DateFormat dateFormat;
+    private final LoService loService;
+    private final DcpProperties dcpProperties;
+    private final SubscriptionManagementClient subscriptionManagementClient;
+    private final SubscriptionTrafficClient subscriptionTrafficClient;
+    private final ThreadPoolExecutor synchronizingExecutor;
+    private final DateFormat dateFormat;
 
     public SynchronizationManagement(ThreadPoolExecutor synchronizingExecutor, LoService loService,
             DcpProperties dcpProperties, SubscriptionManagementClient subscriptionManagementClient,
@@ -67,49 +67,49 @@ public class SynchronizationManagement {
     public void synchronize() {
         LOG.info("Synchronization in progress... ");
 
-        QuerySubscriptionsResponse subsctiptions = subscriptionManagementClient
-                .getSubsctiptions(dcpProperties.getCustomerNo());
+        QuerySubscriptionsResponse subscriptions = subscriptionManagementClient
+                .getSubscriptions(dcpProperties.getCustomerNo());
         List<Device> devices = loService.getDevices();
 
-        List<DeviceProperties> devicesProperties = convertToProperties(subsctiptions);
+        List<DeviceProperties> devicesProperties = convertToProperties(subscriptions);
 
-        for (DeviceProperties properites : devicesProperties) {
-            Optional<Device> matchingDevice = getMatchingDevice(properites, devices);
+        for (DeviceProperties properties : devicesProperties) {
+            Optional<Device> matchingDevice = getMatchingDevice(properties, devices);
             if (matchingDevice.isPresent()) {
                 // update
                 Device device = matchingDevice.get();
-                device.withProperties(properites.toMap());
+                device.withProperties(properties.toMap());
                 synchronizingExecutor.execute(() -> loService.updateDevice(device));
             } else {
                 // create
                 Device device = new Device() //
-                        .withId(MQTT_DEVICES_PREFIX + properites.getSimMsisdn()) //
-                        .withName(properites.getSimMsisdn()) //
-                        .withProperties(properites.toMap()); //
+                        .withId(MQTT_DEVICES_PREFIX + properties.getSimMsisdn()) //
+                        .withName(properties.getSimMsisdn()) //
+                        .withProperties(properties.toMap()); //
                 synchronizingExecutor.execute(() -> loService.createDevice(device));
             }
         }
         LOG.info("Synchronization in done... ");
     }
 
-    private Optional<Device> getMatchingDevice(DeviceProperties properites, List<Device> devices) {
+    private Optional<Device> getMatchingDevice(DeviceProperties properties, List<Device> devices) {
         for (Device device : devices) {
-            if (device.getId().contains(properites.getSimMsisdn())) {
+            if (device.getId().contains(properties.getSimMsisdn())) {
                 return Optional.of(device);
             }
         }
         return Optional.empty();
     }
 
-    private List<DeviceProperties> convertToProperties(QuerySubscriptionsResponse subsctiptions) {
+    private List<DeviceProperties> convertToProperties(QuerySubscriptionsResponse subscriptions) {
         List<DeviceProperties> result = new ArrayList<>();
 
-        for (Subscription subscription : subsctiptions.getSubscriptions().getSubscription()) {
+        for (Subscription subscription : subscriptions.getSubscriptions().getSubscription()) {
+            // Must be exactly 1
             SimResourceV2 simResourceV2 = subscriptionManagementClient.getSimResource(subscription.getImsi())
-                    .getSimResource().get(0); // Must be olny 1
-            Traffic traffic = subscriptionTrafficClient.getTraffic(subscription.getImsi()).getTraffic().get(0);// Must
-                                                                                                               // be
-                                                                                                               // only 1
+                    .getSimResource().get(0);
+            // Must be exactly 1
+            Traffic traffic = subscriptionTrafficClient.getTraffic(subscription.getImsi()).getTraffic().get(0);
 
             DeviceProperties deviceProperties = new DeviceProperties(dateFormat);
 

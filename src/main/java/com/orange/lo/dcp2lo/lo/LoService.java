@@ -27,11 +27,11 @@ import net.jodah.failsafe.RetryPolicy;
 public class LoService {
 
     private String groupId;
-    private LoProperties loProperties;
-    private Inventory inventory;
-    private Groups groups;
-    private RetryPolicy<List<Device>> restDevicesRetryPolicy;
-    private RetryPolicy<Group> restGroupRetryPolicy;
+    private final LoProperties loProperties;
+    private final Inventory inventory;
+    private final Groups groups;
+    private final RetryPolicy<List<Device>> restDevicesRetryPolicy;
+    private final RetryPolicy<Group> restGroupRetryPolicy;
 
     public LoService(LOApiClient loApiClient, LoProperties loProperties,
             RetryPolicy<List<Device>> restDevicesRetryPolicy, RetryPolicy<Group> restGroupRetryPolicy) {

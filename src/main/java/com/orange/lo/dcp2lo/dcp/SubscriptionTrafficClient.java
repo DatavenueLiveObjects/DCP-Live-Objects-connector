@@ -19,7 +19,7 @@ import net.ericsson.dcp.api.subscriptiontraffic.ResourceType;
 
 public class SubscriptionTrafficClient extends WebServiceGatewaySupport {
 
-    private ObjectFactory trafficObjectFactory;
+    private final ObjectFactory trafficObjectFactory;
 
     public SubscriptionTrafficClient(ObjectFactory trafficObjectFactory) {
         this.trafficObjectFactory = trafficObjectFactory;

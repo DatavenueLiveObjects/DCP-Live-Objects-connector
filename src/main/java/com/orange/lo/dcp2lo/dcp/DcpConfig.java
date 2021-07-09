@@ -22,7 +22,7 @@ public class DcpConfig {
     private static final String SUBSCRIPTION_TRAFFIC_CONTEXT_PATH = "net.ericsson.dcp.api.subscriptiontraffic";
     private static final String SUBSCRIPTION_MANAGEMENT_CONTEXT_PATH = "net.ericsson.dcp.api.subscriptionmanagement";
 
-    private SecurityInterceptor securityInterceptor;
+    private final SecurityInterceptor securityInterceptor;
 
     public DcpConfig(SecurityInterceptor securityInterceptor) {
         this.securityInterceptor = securityInterceptor;
@@ -59,8 +59,8 @@ public class DcpConfig {
     }
 
     @Bean
-    public SubscriptionTrafficClient subscriptionTrafiicClient(Jaxb2Marshaller subscriptionTrafficMarshaller,
-            ObjectFactory trafficObjectFactory) {
+    public SubscriptionTrafficClient subscriptionTrafficClient(Jaxb2Marshaller subscriptionTrafficMarshaller,
+                                                               ObjectFactory trafficObjectFactory) {
         SubscriptionTrafficClient subscriptionTrafficClient = new SubscriptionTrafficClient(trafficObjectFactory);
         subscriptionTrafficClient.setDefaultUri(SUBSCRIPTION_TRAFFIC_URI);
         subscriptionTrafficClient.setMarshaller(subscriptionTrafficMarshaller);
